@@ -31,9 +31,9 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun getItemCount() = movies.size
 
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.article_title)
-        val description: TextView = view.findViewById(R.id.article_description)
-        val featuredImage: ImageView = view.findViewById(R.id.featured_image)
+        private val title: TextView = view.findViewById(R.id.article_title)
+        private val description: TextView = view.findViewById(R.id.article_description)
+        private val featuredImage: ImageView = view.findViewById(R.id.featured_image)
 
         fun bind(movie: Movie) {
             title.text = movie.title
