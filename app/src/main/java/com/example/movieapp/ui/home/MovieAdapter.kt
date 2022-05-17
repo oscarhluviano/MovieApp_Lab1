@@ -31,7 +31,7 @@ class MovieAdapter(val onItemListener: OnItemListener) : RecyclerView.Adapter<Mo
     override fun getItemCount() = movies.size
 
     interface OnItemListener {
-        fun clickMovie()
+        fun clickMovie(movie: Movie)
     }
 
     class MovieViewHolder(view: View, onItemListener: MovieAdapter.OnItemListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -40,19 +40,21 @@ class MovieAdapter(val onItemListener: OnItemListener) : RecyclerView.Adapter<Mo
         private val featuredImage: ImageView = view.findViewById(R.id.featured_image)
 
         private val onItemListener = onItemListener
+        private lateinit var item: Movie
 
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(p0: View){
-            onItemListener.clickMovie()
+            onItemListener.clickMovie(item)
         }
 
         fun bind(movie: Movie) {
             title.text = movie.title
             description.text = movie.description
             featuredImage.setImageResource(movie.featuredImage)
+            item = movie
         }
 
     }
