@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(val onItemListener: OnItemListener) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var movies = listOf<Movie>()
         set(value) {
@@ -20,7 +20,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.movie_item, parent, false)
-        return MovieViewHolder(view)
+        return MovieViewHolder(view, onItemListener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -30,15 +30,31 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun getItemCount() = movies.size
 
-    class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    interface OnItemListener {
+        fun clickMovie()
+    }
+
+    class MovieViewHolder(view: View, onItemListener: MovieAdapter.OnItemListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private val title: TextView = view.findViewById(R.id.article_title)
         private val description: TextView = view.findViewById(R.id.article_description)
         private val featuredImage: ImageView = view.findViewById(R.id.featured_image)
+
+        private val onItemListener = onItemListener
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View){
+            onItemListener.clickMovie()
+        }
 
         fun bind(movie: Movie) {
             title.text = movie.title
             description.text = movie.description
             featuredImage.setImageResource(movie.featuredImage)
         }
+
     }
 }
+

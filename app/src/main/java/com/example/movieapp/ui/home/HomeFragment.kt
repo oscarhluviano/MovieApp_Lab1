@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MovieAdapter.OnItemListener {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -29,7 +31,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieAdapter = MovieAdapter() // (2)
+        val movieAdapter = MovieAdapter(this) // (2)
         binding.rvMovies.adapter = movieAdapter// (3)
         print(movieAdapter.movies.size)
         movieAdapter.movies = Movie.data // (4)
@@ -39,5 +41,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun clickMovie() {
+        findNavController().navigate(R.id.action_nav_home_to_detailsFragment2)
     }
 }
