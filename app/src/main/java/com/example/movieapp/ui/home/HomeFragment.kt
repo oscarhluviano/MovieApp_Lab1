@@ -46,6 +46,14 @@ class HomeFragment : Fragment(), MovieAdapter.OnItemListener {
 
     override fun clickMovie(movie: Movie) {
         Toast.makeText(this.context, movie.title, Toast.LENGTH_SHORT).show()
+
+        val bundle = Bundle()
+        bundle.putString("titulo", movie.title)
+        bundle.putString("description", movie.description)
+        bundle.putInt("video", movie.video)
+        bundle.putInt("img", movie.featuredImage)
+        parentFragmentManager.setFragmentResult("datosf1",bundle)
+
         findNavController().navigate(R.id.action_nav_home_to_detailsFragment2)
     }
 }
